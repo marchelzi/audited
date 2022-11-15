@@ -141,7 +141,7 @@ module Audited
       #     user.version
       #   end
       #
-      def revisions(from_version = 1)
+      def modifications(from_version = 1)
         return [] unless audits.from_version(from_version).exists?
 
         all_audits = audits.select([:audited_changes, :version, :action]).to_a
@@ -157,7 +157,7 @@ module Audited
 
       # Get a specific revision specified by the version number, or +:previous+
       # Returns nil for versions greater than revisions count
-      def revision(version)
+      def modification(version)
         if version == :previous || audits.last.version >= version
           revision_with Audited.audit_class.reconstruct_attributes(audits_to(version))
         end
